@@ -9,8 +9,8 @@
 			"Database": "gowebapp"
 		},
 		"MySQL": {
-			"Username": "root",
-			"Password": "",
+			"Username": "developer",
+			"Password": "developer",
 			"Name": "db_belajar_golang",
 			"Hostname": "127.0.0.1",
 			"Port": 3306,
