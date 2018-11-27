@@ -1,6 +1,9 @@
 package main
 
-import "libraries/models/test"
+import (
+	"fmt"
+	"libraries/models/test"
+)
 
 // "libraries/lib/system/config"
 // "libraries/lib/system/database"
@@ -12,15 +15,34 @@ import "libraries/models/test"
 // "libraries/models/test"
 
 func main() {
-	//basePath, err := os.Getwd()
-	//sysconfig.Load(config)
-	// config.SetConfig()
-	// fmt.Println(config.Cfg)
-	// fmt.Println(configuration.Database.MySQL.Username)
-	//test.Create()
 	var tesst = test.Mahasiswa{}
-	tesst.Create()
-	//fmt.Println("configs"+string(os.PathSeparator)+"development/application.json")
+
+	result, err := tesst.Delete()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("delete successful : ", result)
+	}
+
+	result, err = tesst.Create()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("insert successful : ", result)
+	}
+
+	result, err = tesst.Update()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("update successful : ", result)
+	}
+
+	result2 := tesst.Read()
+	for i, data := range result2 {
+		fmt.Printf("index (%d) : %s\n", i, data.Name)
+	}
+	// fmt.Println(result2[0].Name)
 }
 
 // // *****************************************************************************

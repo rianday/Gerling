@@ -45,7 +45,7 @@ func Load(p Parser) {
 
 	// Parse the config
 	if err := p.ParseJSON(jsonBytes); err != nil {
-		log.Fatalln("Could not parse %q: %v", configFile, err)
+		log.Fatalln(err)
 	}
 }
 
@@ -74,5 +74,4 @@ func (c *configuration) ParseJSON(b []byte) error {
 
 func init() {
 	Load(Cfg)
-	// 	fmt.Println(cfg)
 }
