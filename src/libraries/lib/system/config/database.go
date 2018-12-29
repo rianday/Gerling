@@ -34,7 +34,8 @@ type DbInfo struct {
 	// Database type
 	Type Type
 	// MySQL info if used
-	MySQL MySQLInfo
+	MySQL     MySQLInfo
+	MySQLTest MySQLInfo
 	// Bolt info if used
 	Bolt BoltInfo
 	// MongoDB info if used
@@ -50,6 +51,16 @@ type MySQLInfo struct {
 	Port      int
 	Parameter string
 }
+
+// // MySQLInfoTest is the details for the database connection
+// type MySQLInfoTest struct {
+// 	Username  string
+// 	Password  string
+// 	Name      string
+// 	Hostname  string
+// 	Port      int
+// 	Parameter string
+// }
 
 // BoltInfo is the details for the database connection
 type BoltInfo struct {

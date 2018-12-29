@@ -60,7 +60,7 @@ var Cfg = &configuration{}
 type configuration struct {
 	Database DbInfo `json:"Database"`
 	// Email     email.SMTPInfo  `json:"Email"`
-	// Recaptcha recaptcha.Info  `json:"Recaptcha"`
+	// Recaptcha Info `json:"Recaptcha"`
 	// Server    server.Server   `json:"Server"`
 	// Session   session.Session `json:"Session"`
 	// Template  view.Template   `json:"Template"`

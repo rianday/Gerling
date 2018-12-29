@@ -1,4 +1,4 @@
-package email
+package config
 
 import (
 	"encoding/base64"

@@ -9,6 +9,14 @@
 			"Database": "gowebapp"
 		},
 		"MySQL": {
+			"Username": "root",
+			"Password": "root",
+			"Name": "bank_rongsok",
+			"Hostname": "127.0.0.1",
+			"Port": 3306,
+			"Parameter": "?parseTime=true"
+		},
+		"MySQLTest": {
 			"Username": "developer",
 			"Password": "developer",
 			"Name": "db_belajar_golang",
@@ -26,7 +34,7 @@
 	},
 	"Recaptcha": {
 		"Enabled": false,
-		"Secret": "",
+		"Secret": "asdfklasdaslkdfklasdfklaksdfkl123kl123%^&*JKJ",
 		"SiteKey": ""
 	},
 	"Server": {
