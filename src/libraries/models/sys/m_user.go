@@ -1,7 +1,6 @@
 package sys
 
 import (
-	"fmt"
 	"libraries/lib/system/database"
 	"log"
 
@@ -10,13 +9,14 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"not null;unique"`
-	Email    string `gorm:"not null;unique"`
-	Password string `gorm:"not null"`
-	Token    string
+	Username string `gorm:"not null;unique" form:"username" json:"username"` // binding:"required"`
+	Email    string `gorm:"not null;unique" form:"email" json:"user"`        // binding:"required"`
+	Phone    string `gorm:"not null;unique" form:"phone" json:"phone"`       // binding:"required"`
+	Password string `gorm:"not null" form:"password" json:"password"`        // binding:"required"`
+	Token    string `json:"token"`
 	//PinToken      string
-	Salt          string
-	ResetPassword string
+	Salt          string `json:"-"`
+	ResetPassword string `json:"-"`
 }
 
 func (User) TableName() string {
@@ -39,26 +39,31 @@ func (User) CreateTable() {
 
 //be to Add, Update, Active/NonActive, Find by Id
 
-func (User) Add(params []interface{}) (error, interface{}) {
+func (user *User) Add() (error, interface{}) {
 	db := database.Open()
+	db.LogMode(true)
 
 	tx := db.Begin()
 	defer tx.Close()
 
-	users := User{}
-
-	if 0 < len(params) {
-		for _, param := range params {
-			users = User{Username: "test", Email: "test@gmail.com", Password: "asda12368asd&&^%@&@("}
-			fmt.Println(param)
-		}
-	}
-
-	if err := tx.Create(&users).Error; err != nil {
+	if err := tx.Create(&user).Error; err != nil {
 		tx.Rollback()
 		return err, nil
 	}
 
-	return tx.Commit().Error, nil
+	return tx.Commit().Error, user
 
+}
+
+func (user *User) Get() (error, interface{}) {
+	db := database.Open()
+	//db.LogMode(true)
+
+	defer db.Close()
+
+	if err := db.Where(user).First(&user).Error; err != nil {
+		return err, nil
+	}
+
+	return nil, user
 }
