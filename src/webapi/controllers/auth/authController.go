@@ -27,11 +27,18 @@ func RegisterAction(c *gin.Context) {
 		errors.Code = 12
 		errors.Message = err.Error()
 		response.Set("failed", "Please check your input", nil, errors)
-		c.JSON(http.StatusBadRequest, response)
-		return
+		//c.JSON(http.StatusBadRequest, response)
+	} else {
+		if result == nil {
+			errors.Code = 12
+			errors.Message = "No Response System"
+			response.Set("failed", "No Response", nil, errors)
+		} else {
+			response = result.(auth.Response)
+		}
 	}
 
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, response)
 }
 
 func LoginAction(c *gin.Context) {
@@ -50,11 +57,14 @@ func LoginAction(c *gin.Context) {
 
 	err, result := form.CheckLogin()
 	if err != nil {
-		errors.Code = 12
-		errors.Message = err.Error()
-		response.Set("failed", "Please check your input", nil, errors)
-		c.JSON(http.StatusBadRequest, response)
-		return
+		if result == nil {
+			errors.Code = 12
+			errors.Message = err.Error()
+			response.Set("failed", "Please check your input", nil, errors)
+		} else {
+			response = result.(auth.Response)
+			//fmt.Println(result)
+		}
 	}
 
 	c.JSON(http.StatusOK, result)

@@ -10,7 +10,7 @@ import (
 type User struct {
 	gorm.Model
 	Username string `gorm:"not null;unique" form:"username" json:"username"` // binding:"required"`
-	Email    string `gorm:"not null;unique" form:"email" json:"user"`        // binding:"required"`
+	Email    string `gorm:"not null;unique" form:"email" json:"email"`       // binding:"required"`
 	Phone    string `gorm:"not null;unique" form:"phone" json:"phone"`       // binding:"required"`
 	Password string `gorm:"not null" form:"password" json:"password"`        // binding:"required"`
 	Token    string `json:"token"`

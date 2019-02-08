@@ -2,6 +2,8 @@ package auth
 
 import (
 	"libraries/models/sys"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type FormLogin struct {
@@ -15,7 +17,6 @@ func (login *FormLogin) CheckLogin() (error, interface{}) {
 
 	var user sys.User
 	user.Email = login.Email
-	user.Password = login.Password
 
 	err, result := user.Get()
 
@@ -24,10 +25,18 @@ func (login *FormLogin) CheckLogin() (error, interface{}) {
 		errors.Message = err.Error()
 
 		response.Set("failed", "Login failed", nil, errors)
-		return err, nil
 	} else {
-		response.Set("success", "You are logged in", result, errors)
+		//fmt.Println(result.(*sys.User).Password)
+		err := bcrypt.CompareHashAndPassword([]byte(result.(*sys.User).Password), []byte(login.Password))
+		if err != nil {
+			errors.Code = 11 //TODO : let's create repository errors code
+			errors.Message = err.Error()
+
+			response.Set("failed", "Your email and password doesn't match", nil, errors)
+		} else {
+			response.Set("success", "You are logged in", result, errors)
+		}
 	}
 
-	return nil, response
+	return err, response
 }

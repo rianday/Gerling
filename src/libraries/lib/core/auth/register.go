@@ -1,21 +1,24 @@
 package auth
 
 import "libraries/models/sys"
+import "golang.org/x/crypto/bcrypt"
 
 type FormRegister struct {
 	Username string `form:"username" json:"username" binding:"required"`
-	Email    string `form:"email" json:"user" binding:"required"`
+	Email    string `form:"email" json:"user" binding:"required,email"`
 	Phone    string `form:"phone" json:"phone" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required,min=6"`
 }
 
 func (reg *FormRegister) SetRegister() (error, interface{}) {
 	var response = Response{}
 	var errors Errors
 	var user sys.User
+	var tempPassword []byte
 
 	user.Email = reg.Email
-	user.Password = reg.Password
+	tempPassword, err := bcrypt.GenerateFromPassword([]byte(reg.Password), 14)
+	user.Password = string(tempPassword)
 	user.Username = reg.Username
 	user.Phone = reg.Phone
 
@@ -26,10 +29,9 @@ func (reg *FormRegister) SetRegister() (error, interface{}) {
 		errors.Message = err.Error()
 
 		response.Set("failed", "Register failed", nil, errors)
-		return err, nil
 	} else {
 		response.Set("success", "You have registered", result, errors)
 	}
 
-	return nil, response
+	return err, response
 }
