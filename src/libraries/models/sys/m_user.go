@@ -12,7 +12,7 @@ type User struct {
 	Username string `gorm:"not null;unique" form:"username" json:"username"` // binding:"required"`
 	Email    string `gorm:"not null;unique" form:"email" json:"email"`       // binding:"required"`
 	Phone    string `gorm:"not null;unique" form:"phone" json:"phone"`       // binding:"required"`
-	Password string `gorm:"not null" form:"password" json:"password"`        // binding:"required"`
+	Password string `gorm:"not null" form:"password" json:"-"`               // binding:"required"`
 	Token    string `json:"token"`
 	//PinToken      string
 	Salt          string `json:"-"`

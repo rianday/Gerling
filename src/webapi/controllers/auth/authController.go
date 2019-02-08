@@ -75,3 +75,12 @@ func RecreateTable(c *gin.Context) {
 
 	user.CreateTable()
 }
+
+func AdminAction(c *gin.Context) {
+	var response auth.Response
+	var errors auth.Errors
+
+	response.Set("success", "You are logged in", nil, errors)
+
+	c.JSON(http.StatusOK, response)
+}
